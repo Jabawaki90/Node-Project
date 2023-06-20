@@ -66,15 +66,35 @@
 //     }
 // });
 
-const fs = require('fs');
+// const fs = require('fs');
+// const zlib = require('zlib');
 
-const readStream = fs.createReadStream("./file.txt", {
-    encoding: "utf-8",
-});
+// const gzip = zlib.createGzip();
 
-const writeStream = fs.createWriteStream("./file2.txt");
+// const readStream = fs.createReadStream("./file.txt", {
+//     encoding: "utf-8",
+// });
 
-readStream.on("data", (chunk)=>{
-    console.log(chunk);
-    writeStream.write(chunk)
+// readStream.pipe(gzip).pipe(fs.WriteStream('./file2.txt.gz'))
+
+// const writeStream = fs.createWriteStream("./file2.txt");
+
+// readStream.on("data", (chunk)=>{
+//     console.log(chunk);
+//     writeStream.write(chunk)
+// })
+
+// readStream.pipe(writeStream);
+
+//node server
+const http = require('http');
+
+const server =  http.createServer((req, res)=>{
+    
+
+    console.log('req', req);
+    res.writeHead(200, {"Content-Type":"text/plain"});
+    res.end("Hello world");
 })
+
+server.listen(4000, ()=> console.log('server run on port 4000'));
