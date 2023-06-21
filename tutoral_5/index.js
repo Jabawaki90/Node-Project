@@ -87,14 +87,82 @@
 // readStream.pipe(writeStream);
 
 //node server
-const http = require('http');
+// const http = require('http');
+// const fs = require('fs');
 
-const server =  http.createServer((req, res)=>{
+// const server =  http.createServer((req, res)=>{
     
+//     // const superHero = {
+//     //     firstName: "Bruce",
+//     //     lastName: "Wayne"
+//     // }
+//     const name = "ashraf"
+    
+//     // console.log('req', req);
+//     res.writeHead(200, {"Content-Type":"text/html"});
+//     // fs.createReadStream(__dirname+"./index.html").pipe(res);
+//     let html = fs.readFileSync("./index.html", "utf-8");
+//     html = html.replace("{{name}}", name);
+//     res.end(html);
+// })
 
-    console.log('req', req);
-    res.writeHead(200, {"Content-Type":"text/plain"});
-    res.end("Hello world");
-})
+// server.listen(4000, ()=> console.log('server run on port 4000'));
 
-server.listen(4000, ()=> console.log('server run on port 4000'));
+// const http = require('http');
+// const fs = require('fs')
+
+// const server = http.createServer((req,res)=>{
+    
+//     // res.end(req.url);
+//     switch(req.url){
+
+//         case "/":
+//         res.writeHead(200, {"Content-Type":"text/html"});
+//         res.end("<h1>Homepage</h1>");
+//         break;
+
+//         case "/about":
+//         res.writeHead(200, {"Content-Type":"text/html"});
+//         res.end("<h1>About</h1>");
+//         break;
+
+//         case "/profile":
+//         res.writeHead(200, {"Content-Type":"text/html"});
+//         res.end("<h1>Profile</h1>");
+//         break;
+
+//         case "/api":
+//         res.writeHead(200, {"Content-Type":"application/json"});
+//         const superHero = {
+//             firstName: "Clark",
+//             lastName: "Kent"
+//         }
+//         res.end(JSON.stringify(superHero));
+//         break;
+        
+//         default:
+//         res.writeHead(404);
+//         res.end("page not found");
+
+//     }
+    
+// },);
+
+// server.listen(4000, () => {
+//     console.log("server started on port 4000");
+// });
+
+const crypto = require("crypto");
+
+const start = Date.now();
+process.env.UV_THREADPOOL_SIZE = 8;
+const MAXX_CALL = 8;
+
+for(let i =0; i<MAXX_CALL; i++){
+    crypto.pbkdf2("password", "salt", 100000,512, "sha512", ()=>{
+        console.log("Hash", Date.now() - start);
+    });
+}
+// crypto.pbkdf2Sync("password", "salt", 100000,512, "sha512");
+// crypto.pbkdf2Sync("password", "salt", 100000,512, "sha512");
+// console.log("Hash", Date.now() - start);
