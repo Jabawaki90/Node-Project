@@ -152,17 +152,65 @@
 //     console.log("server started on port 4000");
 // });
 
-const crypto = require("crypto");
+// const crypto = require("crypto");
 
-const start = Date.now();
-process.env.UV_THREADPOOL_SIZE = 8;
-const MAXX_CALL = 8;
+// const start = Date.now();
+// process.env.UV_THREADPOOL_SIZE = 8;
+// const MAXX_CALL = 8;
 
-for(let i =0; i<MAXX_CALL; i++){
-    crypto.pbkdf2("password", "salt", 100000,512, "sha512", ()=>{
-        console.log("Hash", Date.now() - start);
-    });
-}
+// for(let i =0; i<MAXX_CALL; i++){
+//     crypto.pbkdf2("password", "salt", 100000,512, "sha512", ()=>{
+//         console.log("Hash", Date.now() - start);
+//     });
+// }
 // crypto.pbkdf2Sync("password", "salt", 100000,512, "sha512");
 // crypto.pbkdf2Sync("password", "salt", 100000,512, "sha512");
 // console.log("Hash", Date.now() - start);
+
+// const https = require('https');
+
+
+// const MAXX_CALL = 12;
+// const start = Date.now()
+// for(let i =0; i<MAXX_CALL; i++){
+//     https.request("https://www.google.com", (res)=>{
+//         res.on("data", ()=>{})
+//         res.on("end", ()=>{
+//             console.log(Date.now() - start);
+//         })
+//     })
+//     .end()
+// }
+
+setTimeout(()=> console.log("setTimeout 1"),0);
+setTimeout(()=> {
+    console.log("this is setTimeout 2");
+    process.nextTick(()=>{
+        console.log("next tick settimeout 2");
+    })
+},0);
+setTimeout(()=> console.log("setTimeout 3"),0);
+
+process.nextTick(()=> console.log("this is process.nextTick 1"));
+process.nextTick(()=>{
+    console.log("this is process.nextTick 2");
+    process.nextTick(()=> console.log("this is the inner next tick inside next tick"))
+});
+process.nextTick(()=> console.log("this is process.nextTick 3"));
+
+Promise.resolve().then(()=> console.log("this is promise 1"));
+Promise.resolve().then(()=>{
+    console.log("this is promise 2");
+    process.nextTick(()=> console.log("this is the inner next tick inside Promise then block"))
+});
+Promise.resolve().then(()=> console.log("this is promise 3"));
+
+
+
+// Promise.resolve().then(()=> console.log("this is Promise.resolve 1"));
+// process.nextTick(()=> console.log("this is process.nextTick 1"));
+
+// console.log("console log 1");
+// process.nextTick(()=> console.log("next tick 1"))
+// console.log("console log 2");
+
